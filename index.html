@@ -32,6 +32,22 @@ df-messenger-chat-bubble df-message {
   color: #000000 !important;
 }
 
+/* 入力フィールドのフォーカス時の黒枠を完全に消す */
+input:focus,
+textarea:focus,
+button:focus,
+select:focus,
+* :focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Dialogflow Messenger用 */
+df-messenger input:focus,
+df-messenger textarea:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
 
   </style>
 </head>
