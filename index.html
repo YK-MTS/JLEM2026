@@ -23,11 +23,8 @@
       --df-messenger-chip-color: #1f2937;
       --df-messenger-chip-border-color: #1f2937;
       --df-messenger-font-family: system-ui,-apple-system,'Segoe UI',Roboto,'Noto Sans JP',sans-serif;
-      
-      /* 入力フィールドのフォーカス枠を消す */
       --df-messenger-input-box-focus-border-color: transparent;
       --df-messenger-input-border-color: #e5e5e5;
-      --df-messenger-input-box-focus: 0 0 0 0 transparent;
       --df-messenger-focus-color: transparent;
     }
     
@@ -64,7 +61,49 @@
     chat-icon="">
   </df-messenger>
   <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
+  
+  <script>
+    // Dialogflow Messenger内のフォーカス枠を消すスクリプト
+    window.addEventListener('df-messenger-loaded', function() {
+      setTimeout(function() {
+        const messenger = document.querySelector('df-messenger');
+        if (messenger && messenger.shadowRoot) {
+          const style = document.createElement('style');
+          style.textContent = `
+            input:focus,
+            textarea:focus,
+            .input-box:focus,
+            .input-container input:focus {
+              outline: none !important;
+              box-shadow: none !important;
+              border: 1px solid #e5e5e5 !important;
+            }
+          `;
+          messenger.shadowRoot.appendChild(style);
+        }
+      }, 500);
+    });
+    
+    // フォールバック
+    setTimeout(function() {
+      const messenger = document.querySelector('df-messenger');
+      if (messenger && messenger.shadowRoot) {
+        const style = document.createElement('style');
+        style.textContent = `
+          input:focus,
+          textarea:focus,
+          .input-box:focus,
+          .input-container input:focus {
+            outline: none !important;
+            box-shadow: none !important;
+            border: 1px solid #e5e5e5 !important;
+          }
+        `;
+        messenger.shadowRoot.appendChild(style);
+      }
+    }, 2000);
+  </script>
+  
   <footer>© 2025 JLPT 読解 AI-DA（研究用デモ）</footer>
 </body>
 </html>
-``
