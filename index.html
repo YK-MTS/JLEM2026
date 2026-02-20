@@ -13,42 +13,37 @@
     .small { font-size: 13px; color: #444; }
     .code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, 'Noto Sans Mono', monospace; }
     footer { padding: 16px; text-align: center; color: #666; font-size: 12px; }
-
-    /* Messenger の配色（ここにまとめる） */
-df-messenger {
-  --df-messenger-primary-color: #1e3a8a;   /* タイトルバー：より深い青 */
-  --df-messenger-font-color: #ffffff;      /* タイトル文字色：白 */
-
-  --df-messenger-bot-message: #4b5563;     /* Bot背景：濃いグレー */
-  --df-messenger-user-message: #1d4ed8;    /* User背景：濃い青 */
-
-  --df-messenger-chip-color: #1f2937;      /* チップ文字色 */
-  --df-messenger-chip-border-color: #1f2937;
-  --df-messenger-font-family: system-ui,-apple-system,'Segoe UI',Roboto,'Noto Sans JP',sans-serif;
-}
-
-/* ② 吹き出し内の文字色を強制上書き（環境差吸収） */
-df-messenger-chat-bubble df-message {
-  color: #000000 !important;
-}
-
-/* 入力フィールドのフォーカス時の黒枠を完全に消す */
-input:focus,
-textarea:focus,
-button:focus,
-select:focus,
-* :focus {
-  outline: none !important;
-  box-shadow: none !important;
-}
-
-/* Dialogflow Messenger用 */
-df-messenger input:focus,
-df-messenger textarea:focus {
-  outline: none !important;
-  box-shadow: none !important;
-}
-
+    
+    /* Messenger の配色 */
+    df-messenger {
+      --df-messenger-primary-color: #1e3a8a;
+      --df-messenger-font-color: #ffffff;
+      --df-messenger-bot-message: #4b5563;
+      --df-messenger-user-message: #1d4ed8;
+      --df-messenger-chip-color: #1f2937;
+      --df-messenger-chip-border-color: #1f2937;
+      --df-messenger-font-family: system-ui,-apple-system,'Segoe UI',Roboto,'Noto Sans JP',sans-serif;
+      
+      /* 入力フィールドのフォーカス枠を消す */
+      --df-messenger-input-box-focus-border-color: transparent;
+      --df-messenger-input-border-color: #e5e5e5;
+      --df-messenger-input-box-focus: 0 0 0 0 transparent;
+      --df-messenger-focus-color: transparent;
+    }
+    
+    /* 吹き出し内の文字色を強制上書き */
+    df-messenger-chat-bubble df-message {
+      color: #000000 !important;
+    }
+    
+    /* 一般的な要素のフォーカス枠を消す */
+    input:focus,
+    textarea:focus,
+    button:focus,
+    select:focus {
+      outline: none !important;
+      box-shadow: none !important;
+    }
   </style>
 </head>
 <body>
@@ -61,8 +56,6 @@ df-messenger textarea:focus {
       Please answer the reading comprehension test by interacting with the chatbot at the bottom right.
     </p>
   </main>
-
-  <!-- 先にコンポーネントを置く -->
   <df-messenger
     intent="WELCOME"
     chat-title="ReadingAI-DA"
@@ -70,10 +63,8 @@ df-messenger textarea:focus {
     language-code="ja"
     chat-icon="">
   </df-messenger>
-
-  <!-- その直後にブートストラップJS -->
   <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
-
   <footer>© 2025 JLPT 読解 AI-DA（研究用デモ）</footer>
 </body>
 </html>
+``
