@@ -1,109 +1,116 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>JLPT 読解 DA – Dialogflow Messenger</title>
-  <style>
-    body { font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Noto Sans JP', sans-serif; margin: 0; }
-    header { padding: 16px; border-bottom: 1px solid #e5e5e5; }
-    header h1 { margin: 0; font-size: 18px; }
-    main { padding: 16px; max-width: 900px; margin: 0 auto; }
-    .note { background: #f7f7f9; border: 1px solid #e5e5f0; border-radius: 8px; padding: 12px 14px; line-height: 1.6; }
-    .small { font-size: 13px; color: #444; }
-    .code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, 'Noto Sans Mono', monospace; }
-    footer { padding: 16px; text-align: center; color: #666; font-size: 12px; }
-    
-    /* Messenger の配色 */
-    df-messenger {
-      --df-messenger-primary-color: #1e3a8a;
-      --df-messenger-font-color: #ffffff;
-      --df-messenger-bot-message: #4b5563;
-      --df-messenger-user-message: #1d4ed8;
-      --df-messenger-chip-color: #1f2937;
-      --df-messenger-chip-border-color: #1f2937;
-      --df-messenger-font-family: system-ui,-apple-system,'Segoe UI',Roboto,'Noto Sans JP',sans-serif;
-      --df-messenger-input-box-focus-border-color: transparent;
-      --df-messenger-input-border-color: #e5e5e5;
-      --df-messenger-focus-color: transparent;
-    }
-    
-    /* 吹き出し内の文字色を強制上書き */
-    df-messenger-chat-bubble df-message {
-      color: #000000 !important;
-    }
-    
-    /* 一般的な要素のフォーカス枠を消す */
-    input:focus,
-    textarea:focus,
-    button:focus,
-    select:focus {
-      outline: none !important;
-      box-shadow: none !important;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VR-DA</title>
+    <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Noto Sans JP', 'Yu Gothic', 'Hiragino Sans', sans-serif;
+            background: #f5f5f5;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            border-radius: 10px;
+            padding: 40px;
+            max-width: 500px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            font-size: 2em;
+            margin-bottom: 30px;
+            font-weight: normal;
+        }
+        p {
+            color: #666;
+            font-size: 1em;
+            line-height: 1.6;
+        }
+        df-messenger {
+            --df-messenger-bot-message: #1e3a8a;
+            --df-messenger-button-titlebar-color: #1e3a8a;
+            --df-messenger-chat-background-color: #fafafa;
+            --df-messenger-font-color: white;
+            --df-messenger-send-icon: #1e3a8a;
+            --df-messenger-user-message: #1e3a8a;
+            --df-messenger-user-message-font-color: white;
+            --df-messenger-primary-color: #1e3a8a;
+        }
+        @media (max-width: 768px) {
+            .container {
+                padding: 30px;
+            }
+            h1 {
+                font-size: 1.5em;
+            }
+        }
+    </style>
 </head>
 <body>
-  <header>
-    <h1>JLPT 読解 AI-DA（Dialogflow Messenger）</h1>
-  </header>
-  <main>
-    <p class="note small">
-      右下のチャットボットとのやりとりを通じて、読解テストに回答してください。<br/>
-      Please answer the reading comprehension test by interacting with the chatbot at the bottom right.
-    </p>
-  </main>
-  <df-messenger
-    intent="WELCOME"
-    chat-title="ReadingAI-DA"
-    agent-id="8a0a8eb7-3023-4aa6-82f0-5c20abca00cf"
-    language-code="ja"
-    chat-icon="">
-  </df-messenger>
-  <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
-  
-  <script>
-    // Dialogflow Messenger内のフォーカス枠を消すスクリプト
-    window.addEventListener('df-messenger-loaded', function() {
-      setTimeout(function() {
-        const messenger = document.querySelector('df-messenger');
-        if (messenger && messenger.shadowRoot) {
-          const style = document.createElement('style');
-          style.textContent = `
-            input:focus,
-            textarea:focus,
-            .input-box:focus,
-            .input-container input:focus {
-              outline: none !important;
-              box-shadow: none !important;
-              border: 1px solid #e5e5e5 !important;
+    <div class="container">
+        <h1>VR-DA</h1>
+        <p>JLPT N2 語彙先行型読解テスト</p>
+        <p style="margin-top: 20px;">右下のチャットボットとのやりとりを通じて、読解テストに回答してください。<br>Please answer the reading comprehension test by interacting with the chatbot at the bottom right.</p>
+    </div>
+    <df-messenger
+        intent="WELCOME"
+        chat-title="VR-DA"
+        agent-id="2a3265d7-57c6-4963-9d43-1a400200e7c7"
+        language-code="ja">
+    </df-messenger>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const df = document.querySelector('df-messenger');
+        df.addEventListener('df-messenger-loaded', () => {
+          setTimeout(() => {
+            try {
+              const chat = df.shadowRoot.querySelector('df-messenger-chat');
+              const userInput = chat.shadowRoot.querySelector('df-messenger-user-input');
+              const style = document.createElement('style');
+            　style.textContent = `
+                  * {
+                    outline: none !important;
+                    box-shadow: none !important;
+                  }
+                  input {
+                    outline: none !important;
+                    box-shadow: none !important;
+                    border: 1px solid #ccc !important;
+                    font-size: 1.6em !important;
+                  }
+                  .input-box-wrapper,
+                  .input-box-wrapper:focus-within {
+                    border: 1px solid #e0e0e0 !important;
+                    box-shadow: none !important;
+                  }
+                `;
+              userInput.shadowRoot.appendChild(style);
+              const input = userInput.shadowRoot.querySelector('input');
+              if (input) {
+                input.placeholder = '回答を入力...';
+              }
+
+              console.log('スタイル注入成功');
+            } catch(e) {
+              console.error('スタイル注入失敗:', e);
             }
-          `;
-          messenger.shadowRoot.appendChild(style);
-        }
-      }, 500);
-    });
-    
-    // フォールバック
-    setTimeout(function() {
-      const messenger = document.querySelector('df-messenger');
-      if (messenger && messenger.shadowRoot) {
-        const style = document.createElement('style');
-        style.textContent = `
-          input:focus,
-          textarea:focus,
-          .input-box:focus,
-          .input-container input:focus {
-            outline: none !important;
-            box-shadow: none !important;
-            border: 1px solid #e5e5e5 !important;
-          }
-        `;
-        messenger.shadowRoot.appendChild(style);
-      }
-    }, 2000);
-  </script>
-  
-  <footer>© 2025 JLPT 読解 AI-DA（研究用デモ）</footer>
+          }, 1000);
+        });
+      });
+    </script>
 </body>
 </html>
