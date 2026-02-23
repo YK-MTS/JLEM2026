@@ -26,12 +26,8 @@
       color: #000000 !important;
     }
     @media (max-width: 768px) {
-      .container {
-        padding: 30px;
-      }
-      h1 {
-        font-size: 1.5em;
-      }
+      .container { padding: 30px; }
+      h1 { font-size: 1.5em; }
     }
   </style>
 </head>
@@ -55,57 +51,43 @@
   <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
 
   <script>
-    let attempts = 0;
-    const timer = setInterval(() => {
-      attempts++;
-      try {
-        const df = document.querySelector('df-messenger');
-        if (!df || !df.shadowRoot) return;
-
-        const chat = df.shadowRoot.querySelector('df-messenger-chat');
-        if (!chat || !chat.shadowRoot) return;
-
-        const userInput = chat.shadowRoot.querySelector('df-messenger-user-input');
-        if (!userInput || !userInput.shadowRoot) return;
-
-        const style = document.createElement('style');
-        style.textContent = `
-          * {
-            outline: none !important;
-            box-shadow: none !important;
+    document.addEventListener('DOMContentLoaded', () => {
+      const df = document.querySelector('df-messenger');
+      df.addEventListener('df-messenger-loaded', () => {
+        setTimeout(() => {
+          try {
+            const chat = df.shadowRoot.querySelector('df-messenger-chat');
+            const userInput = chat.shadowRoot.querySelector('df-messenger-user-input');
+            const style = document.createElement('style');
+            style.textContent = `
+              * {
+                outline: none !important;
+                box-shadow: none !important;
+              }
+              input {
+                outline: none !important;
+                box-shadow: none !important;
+                border: 1px solid #ccc !important;
+                font-size: 1.2em !important;
+              }
+              .input-box-wrapper,
+              .input-box-wrapper:focus-within {
+                border: 1px solid #e0e0e0 !important;
+                box-shadow: none !important;
+              }
+            `;
+            userInput.shadowRoot.appendChild(style);
+            const input = userInput.shadowRoot.querySelector('input');
+            if (input) {
+              input.placeholder = '回答を入力...';
+            }
+            console.log('スタイル注入成功');
+          } catch(e) {
+            console.error('スタイル注入失敗:', e);
           }
-          input {
-            outline: none !important;
-            box-shadow: none !important;
-            border: 1px solid #ccc !important;
-            font-size: 1.2em !important;
-          }
-          .input-box-wrapper,
-          .input-box-wrapper:focus-within {
-            border: 1px solid #e0e0e0 !important;
-            box-shadow: none !important;
-          }
-        `;
-        userInput.shadowRoot.appendChild(style);
-
-        // プレースホルダーを書き換え＋監視
-        const setPlaceholder = () => {
-          const input = userInput.shadowRoot.querySelector('input');
-          if (input && input.placeholder !== '回答を入力...') {
-            input.placeholder = '回答を入力...';
-          }
-        };
-        setPlaceholder();
-        new MutationObserver(setPlaceholder).observe(
-          userInput.shadowRoot, { childList: true, subtree: true, attributes: true }
-        );
-
-        console.log('注入成功');
-        clearInterval(timer);
-      } catch(e) {
-        if (attempts > 100) clearInterval(timer);
-      }
-    }, 100);
+        }, 1000);
+      });
+    });
   </script>
 
   <footer>© 2025 JLPT 読解 AI-DA（研究用デモ）</footer>
