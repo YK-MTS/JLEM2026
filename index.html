@@ -88,10 +88,17 @@
         `;
         userInput.shadowRoot.appendChild(style);
 
-        const input = userInput.shadowRoot.querySelector('input');
-        if (input) {
-          input.placeholder = '回答を入力...';
-        }
+        // プレースホルダーを書き換え＋監視
+        const setPlaceholder = () => {
+          const input = userInput.shadowRoot.querySelector('input');
+          if (input && input.placeholder !== '回答を入力...') {
+            input.placeholder = '回答を入力...';
+          }
+        };
+        setPlaceholder();
+        new MutationObserver(setPlaceholder).observe(
+          userInput.shadowRoot, { childList: true, subtree: true, attributes: true }
+        );
 
         console.log('注入成功');
         clearInterval(timer);
